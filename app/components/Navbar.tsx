@@ -79,22 +79,22 @@ function SearchOverlay({
   return (
     <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex flex-col">
       {/* Search header */}
-      <div className="w-full max-w-3xl mx-auto pt-16 px-6">
-        <div className="flex items-center gap-4 border-b-2 border-white/30 pb-4">
-          <Search size={24} className="text-white/60 flex-shrink-0" />
+      <div className="w-full max-w-2xl mx-auto pt-12 px-5">
+        <div className="flex items-center gap-3 border-b border-white/30 pb-3">
+          <Search size={18} className="text-white/60 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search articles..."
-            className="flex-1 bg-transparent text-white text-2xl font-light outline-none placeholder:text-white/40"
+            className="flex-1 bg-transparent text-white text-lg font-light outline-none placeholder:text-white/40"
           />
           <button onClick={onClose} className="text-white/60 hover:text-white transition-colors">
-            <X size={28} />
+            <X size={20} />
           </button>
         </div>
-        <p className="text-white/40 text-sm mt-3 font-mono">
+        <p className="text-white/40 text-xs mt-2 tracking-wide">
           {query.trim()
             ? `${results.length} result${results.length !== 1 ? "s" : ""}`
             : `${articles.length} articles`}
@@ -102,24 +102,24 @@ function SearchOverlay({
       </div>
 
       {/* Results */}
-      <div className="flex-1 overflow-y-auto mt-6 px-6 pb-16">
-        <div className="max-w-3xl mx-auto flex flex-col gap-3">
+      <div className="flex-1 overflow-y-auto mt-4 px-5 pb-12">
+        <div className="max-w-2xl mx-auto flex flex-col gap-2">
           {results.map((article) => (
             <Link
               key={article.id}
               href={article.href}
               onClick={onClose}
-              className="group flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-colors"
+              className="group flex items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors"
             >
               {/* Cover thumbnail */}
-              <div className="w-16 h-16 rounded-lg overflow-hidden bg-neutral-700 flex-shrink-0 relative">
+              <div className="w-12 h-12 rounded-md overflow-hidden bg-neutral-700 flex-shrink-0 relative">
                 {article.coverImage ? (
                   <Image
                     src={article.coverImage}
                     alt={article.title}
                     fill
                     className="object-cover"
-                    sizes="64px"
+                    sizes="48px"
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-neutral-600 to-neutral-800" />
@@ -127,17 +127,17 @@ function SearchOverlay({
               </div>
               {/* Article info */}
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-semibold text-lg leading-snug group-hover:text-[#D20000] transition-colors truncate">
+                <h3 className="text-white font-semibold text-base leading-snug group-hover:text-[#D20000] transition-colors truncate">
                   {article.title}
                 </h3>
-                <p className="text-white/50 text-sm mt-1 truncate">
+                <p className="text-white/50 text-xs mt-0.5 truncate">
                   {article.reviewer} &middot; {article.typeLabel}
                 </p>
               </div>
               {/* Rating badge */}
               {article.ratingLabel && (
                 <span
-                  className="text-xs font-mono tracking-wider uppercase px-3 py-1 rounded-full text-white flex-shrink-0"
+                  className="text-[0.65rem] tracking-wider uppercase px-2.5 py-0.5 rounded-full text-white flex-shrink-0"
                   style={{ backgroundColor: article.accentColor }}
                 >
                   {article.ratingLabel}
@@ -146,7 +146,7 @@ function SearchOverlay({
             </Link>
           ))}
           {results.length === 0 && query.trim() && (
-            <p className="text-white/40 text-center py-12 text-lg">
+            <p className="text-white/40 text-center py-10 text-base">
               No articles match &ldquo;{query}&rdquo;
             </p>
           )}
@@ -164,31 +164,42 @@ export default function Navbar() {
   return (
     <>
       <div className="w-full bg-black relative overflow-hidden flex flex-col items-center">
-        <div className="w-full relative py-10 px-10">
+        {/* Sizes here are written as explicit values rather than Tailwind's
+            steps because every one of them is the previous size x1.3 — keeping
+            the factor uniform makes the scaling checkable at a glance. */}
+        <div className="w-full relative py-[2.275rem] px-[2.6rem]">
           {/* Search Icon */}
-          <div className="absolute right-10 bottom-6 text-white">
+          <div className="absolute right-[2.6rem] bottom-[1.625rem] text-white">
             <button aria-label="Search" onClick={() => setSearchOpen(true)}>
-              <Search size={29} strokeWidth={2.5} />
+              <Search size={26} strokeWidth={2.5} />
             </button>
           </div>
 
           {/* Logo */}
-          <div className="flex items-center justify-center mb-6">
-            <div className="text-white text-4xl font-bold tracking-widest italic uppercase">
+          <div className="flex items-center justify-center mb-[1.3rem]">
+            {/* Helvetica Neue ships no face above Bold, so font-weight alone
+                tops out at 700 and `font-extrabold` would render identically.
+                The text stroke thickens the glyph outlines themselves, which
+                is what actually reads as heavier — on Windows/Linux too, where
+                this falls back to Arial and hits the same 700 ceiling. */}
+            <div
+              className="text-white text-[1.95rem] leading-[2.6rem] font-extrabold tracking-[0.18em] uppercase"
+              style={{ WebkitTextStroke: "0.6px currentColor" }}
+            >
               BROWN MUSIC REVIEW
             </div>
           </div>
 
           {/* Divider */}
-          <div className="mx-auto w-[468px] max-w-full border-t-4 border-white opacity-80 mb-4" />
+          <div className="mx-auto w-[429px] max-w-full border-t-[2.6px] border-white opacity-80 mb-[0.975rem]" />
 
           {/* Navigation Links */}
-          <div className="flex justify-center gap-12 items-center">
+          <div className="flex justify-center gap-[2.6rem] items-center">
             {pages.map((page) => (
               <Link
                 href={page.path}
                 key={page.name}
-                className="text-white text-xl font-medium leading-[30px] hover:text-[#D20000] transition-colors"
+                className="text-white text-[1.1375rem] font-medium leading-[28.6px] hover:text-[#D20000] transition-colors"
               >
                 {page.name}
               </Link>
@@ -198,9 +209,9 @@ export default function Navbar() {
           {/* Subscribe Button */}
           <Link
             href="/subscribe"
-            className="absolute right-10 top-10 bg-[#D20000] px-6 h-[52px] rounded-lg shadow-sm flex items-center justify-center hover:bg-red-700 transition-colors"
+            className="absolute right-[2.6rem] top-[2.275rem] bg-[#D20000] px-[1.3rem] h-[44.2px] rounded-[0.65rem] shadow-sm flex items-center justify-center hover:bg-red-700 transition-colors"
           >
-            <span className="text-white text-base font-medium">Subscribe</span>
+            <span className="text-white text-[0.975rem] leading-[1.3rem] font-medium">Subscribe</span>
           </Link>
         </div>
       </div>

@@ -20,17 +20,17 @@ export default function EmailSignup() {
   return (
     <section style={{
       width: "100%",
-      padding: "60px 48px",
-      borderTop: "1.5px solid #0a0a0a",
+      padding: "42px 34px",
+      borderTop: "1px solid #0a0a0a",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: "16px",
-      fontFamily: "'DM Sans', sans-serif",
+      gap: "12px",
+      fontFamily: "var(--font-helvetica)",
     }}>
       <h2 style={{
-        fontFamily: "'Playfair Display', serif",
-        fontSize: "1.6rem",
+        fontFamily: "var(--font-display)",
+        fontSize: "1.4rem",
         fontWeight: 700,
         color: "#0a0a0a",
         margin: 0,
@@ -38,9 +38,9 @@ export default function EmailSignup() {
         Never Miss a Review
       </h2>
       <p style={{
-        fontFamily: "'DM Mono', monospace",
-        fontSize: "0.7rem",
-        letterSpacing: "0.1em",
+        fontFamily: "var(--font-helvetica)",
+        fontSize: "0.72rem",
+        letterSpacing: "0.08em",
         color: "#888",
         margin: 0,
       }}>
@@ -49,20 +49,20 @@ export default function EmailSignup() {
 
       {status === "success" ? (
         <p style={{
-          fontFamily: "'DM Mono', monospace",
+          fontFamily: "var(--font-helvetica)",
           fontSize: "0.72rem",
           color: "#e01010",
-          letterSpacing: "0.1em",
+          letterSpacing: "0.08em",
         }}>
           ✓ You&apos;re subscribed!
         </p>
       ) : (
         <form onSubmit={handleSubmit} style={{
           display: "flex",
-          gap: "8px",
-          marginTop: "8px",
+          gap: "6px",
+          marginTop: "6px",
           width: "100%",
-          maxWidth: "460px",
+          maxWidth: "360px",
         }}>
           <input
             type="email"
@@ -73,10 +73,10 @@ export default function EmailSignup() {
             disabled={status === "loading"}
             style={{
               flex: 1,
-              padding: "12px 16px",
-              border: "1.5px solid #0a0a0a",
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.78rem",
+              padding: "9px 12px",
+              border: "1px solid #0a0a0a",
+              fontFamily: "var(--font-helvetica)",
+              fontSize: "0.8rem",
               outline: "none",
               background: "#fff",
             }}
@@ -85,14 +85,14 @@ export default function EmailSignup() {
             type="submit"
             disabled={status === "loading"}
             style={{
-              padding: "12px 24px",
+              padding: "9px 18px",
               background: "#0a0a0a",
               color: "#fff",
               border: "none",
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "var(--font-helvetica)",
               fontSize: "0.75rem",
               fontWeight: 500,
-              letterSpacing: "0.12em",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
               cursor: "pointer",
             }}

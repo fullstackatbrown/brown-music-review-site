@@ -32,14 +32,14 @@ export default function ArticleBody({ article }: ArticleBodyProps) {
   if (getArticleBodyFormat(article) === "html") {
     return (
       <div
-        className="text-base leading-relaxed text-gray-800 [&_a]:text-red-700 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_li]:mb-2 [&_ol]:mb-4 [&_p]:mb-4 [&_ul]:mb-4"
+        className="text-[1.1rem] leading-relaxed text-gray-800 [&_a]:text-red-700 [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_li]:mb-2 [&_ol]:mb-4 [&_p]:mb-4 [&_ul]:mb-4"
         dangerouslySetInnerHTML={{ __html: decodedBody }}
       />
     )
   }
 
   return (
-    <div className="text-base leading-relaxed text-gray-800">
+    <div className="text-[1.1rem] leading-relaxed text-gray-800">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}

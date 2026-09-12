@@ -1,28 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, DM_Mono, DM_Sans } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
+// The site uses exactly two typefaces: Playfair Display for display headings
+// and Helvetica Neue (a system face, so nothing to load) for everything else.
 const playfair = Playfair_Display({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-playfair",
-});
-
-const dmMono = DM_Mono({
-  weight: ["300", "400", "500"],
-  subsets: ["latin"],
-  variable: "--font-dm-mono",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
 });
 
 export const metadata: Metadata = {
@@ -38,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${playfair.variable} ${dmMono.variable} ${dmSans.variable} antialiased bg-white text-black`}
+        className={`${playfair.variable} font-sans antialiased bg-white text-black`}
       >
         <Navbar />
         {children}

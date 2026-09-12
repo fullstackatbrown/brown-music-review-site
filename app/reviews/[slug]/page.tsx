@@ -26,20 +26,20 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
     <div>
       {/* NYT-style vertical article layout:
           type label → title → divider → cover image → byline → divider → body */}
-      <section className="bg-white px-6 sm:px-12 lg:px-16 py-12">
-        <article className="mx-auto max-w-3xl">
-          <span className="mb-3 block text-xs font-mono tracking-widest uppercase text-red-600">
+      <section className="bg-white px-6 sm:px-10 lg:px-12 py-10">
+        <article className="mx-auto max-w-2xl">
+          <span className="mb-2 block text-xs tracking-widest uppercase text-red-600">
             {articleTypeLabel}
           </span>
 
-          <h1 className="mb-6 font-serif text-4xl font-bold leading-tight sm:text-5xl">
+          <h1 className="mb-4 font-serif text-3xl font-bold italic leading-tight sm:text-4xl">
             {article.title}
           </h1>
 
-          <div className="mb-8 h-px w-full bg-gray-200" />
+          <div className="mb-6 h-px w-full bg-gray-200" />
 
           {imageSrc && (
-            <div className="relative mb-4 w-full overflow-hidden rounded-md">
+            <div className="relative mb-3 w-full overflow-hidden rounded-md">
               <Image
                 src={imageSrc}
                 alt={article.title}
@@ -52,7 +52,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
           )}
 
           {(writer || publishedDate) && (
-            <p className="mb-8 text-sm text-gray-500">
+            <p className="mb-6 text-xs text-gray-500">
               {writer && (
                 <>
                   By <strong className="text-black">{writer}</strong>
@@ -63,7 +63,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
             </p>
           )}
 
-          <div className="mb-8 h-px w-full bg-gray-200" />
+          <div className="mb-6 h-px w-full bg-gray-200" />
 
           <ArticleBody article={article} />
         </article>
