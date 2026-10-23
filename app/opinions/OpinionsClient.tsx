@@ -69,7 +69,7 @@ export default function OpinionsClient({ articles }: { articles: HomepageArticle
         <span className="text-xs tracking-widest uppercase text-[#D20000] block mb-2">Brown Music Review</span>
         <h1 className="font-serif text-4xl font-bold italic text-[#D20000] mb-3">Opinions</h1>
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 0.5 }} className="h-[2px] w-14 bg-black origin-left mb-4" />
-        <p className="text-sm text-neutral-500 max-w-md leading-relaxed">Bold takes, hot debates, and the arguments that keep us up at night. We don&apos;t do lukewarm.</p>
+        <p className="text-sm text-neutral-500 max-w-md leading-relaxed">Bold takes about music.</p>
       </motion.div>
 
       {featured && <FeaturedOpinion article={featured} />}

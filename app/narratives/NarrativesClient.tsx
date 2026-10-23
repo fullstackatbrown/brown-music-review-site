@@ -175,8 +175,7 @@ export default function NarrativesClient({ articles }: { articles: HomepageArtic
           className="h-[2px] w-14 bg-black origin-left mb-4"
         />
         <p className="text-sm text-neutral-500 max-w-md leading-relaxed">
-          Blending storytelling and critique to paint a vivid picture of the
-          music&apos;s sound, mood, and emotional impact.
+          Articles that blend storytelling and music journalism.
         </p>
       </motion.div>
 

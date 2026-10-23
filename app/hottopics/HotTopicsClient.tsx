@@ -98,7 +98,7 @@ export default function HotTopicsClient({ articles }: { articles: HomepageArticl
         <span className="text-xs tracking-widest uppercase text-[#D20000] block mb-2">Brown Music Review</span>
         <h1 className="font-serif text-4xl font-bold italic text-[#D20000] mb-3">Hot Topics</h1>
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 0.5 }} className="h-[2px] w-14 bg-black origin-left mb-4" />
-        <p className="text-sm text-neutral-500 max-w-md leading-relaxed">The news, controversies, and conversations shaping the music world right now. Stay in the loop.</p>
+        <p className="text-sm text-neutral-500 max-w-md leading-relaxed">The latest stories in the music industry.</p>
       </motion.div>
 
       {featured && <FeaturedBanner article={featured} />}

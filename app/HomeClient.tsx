@@ -184,8 +184,6 @@ function ArticleCard({ article }: { article: HomepageArticle }) {
 /*  Auto-scrolling carousel for hero section                           */
 /* ------------------------------------------------------------------ */
 function AutoScrollCarousel({ articles }: { articles: HomepageArticle[] }) {
-  const labels = ["Deep Dive", "Narratives", "Hot Topics", "Opinions", "Deep Dive", "Narratives"]
-
   // Duplicate the items so the scroll can loop seamlessly. Because the two
   // copies are identical, when the animation wraps back to its start position
   // the visible layout is pixel-identical — the viewer sees a continuous reel.
@@ -224,14 +222,6 @@ function AutoScrollCarousel({ articles }: { articles: HomepageArticle[] }) {
         {items.map((article, i) => {
           const card = (
             <div className={`flex-shrink-0 ${article.slug ? "cursor-pointer" : ""}`} style={{ width: CARD_WIDTH }}>
-              {/* Category pill */}
-              <div className="flex justify-center mb-3">
-                <div className="h-[28px] px-5 bg-[#D20000] rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-semibold">
-                    {labels[i % labels.length]}
-                  </span>
-                </div>
-              </div>
               {/* Cover image */}
               <div className="rounded-[14px] overflow-hidden bg-neutral-200 relative mb-3" style={{ width: CARD_WIDTH, height: CARD_WIDTH }}>
                 {article.coverImage ? (
@@ -435,8 +425,10 @@ export default function HomeClient({ articles }: { articles: HomepageArticle[] }
             <div className="border-t-[3px] border-black w-full" />
           </div>
 
-          {/* Auto-scrolling carousel */}
-          <div className="relative flex-1 overflow-hidden">
+          {/* Auto-scrolling carousel. The disc's top edge meets this box's top,
+              so the 28px drop — half the disc (226 / 2) less half a cover
+              (170 / 2) — puts each cover's center level with the disc's. */}
+          <div className="relative flex-1 overflow-hidden" style={{ paddingTop: 28 }}>
             <AutoScrollCarousel articles={heroArticles} />
           </div>
         </div>

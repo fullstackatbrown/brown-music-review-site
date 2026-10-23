@@ -30,9 +30,6 @@ export default function About() {
       <span className="text-xs tracking-widest uppercase text-red-600 mb-2 mt-8">
         Meet our staff
       </span>
-      <h2 className="text-3xl font-bold font-serif italic mb-6">
-        Eboard? Writers?
-      </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-3xl">
         {/* Staff member */}

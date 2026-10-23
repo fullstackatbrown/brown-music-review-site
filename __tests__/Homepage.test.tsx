@@ -53,21 +53,6 @@ describe("Homepage", () => {
     expect(screen.getByText("Latest From")).toBeInTheDocument()
   })
 
-  it("renders category pills (Deep Dive, Narratives)", async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ articles: makeArticles(15) }),
-    })
-
-    const { default: HomePage } = await import("@/app/page")
-    render(<HomePage />)
-
-    await waitFor(() => {
-      expect(screen.getAllByText("Deep Dive").length).toBeGreaterThan(0)
-      expect(screen.getAllByText("Narratives").length).toBeGreaterThan(0)
-    })
-  })
-
   it("renders hero article previews from first 2 articles", async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
@@ -189,8 +174,5 @@ describe("Homepage", () => {
 
     // Should still render all sections without errors
     expect(screen.getByText("Latest From")).toBeInTheDocument()
-    await waitFor(() => {
-      expect(screen.getAllByText("Deep Dive").length).toBeGreaterThan(0)
-    })
   })
 })

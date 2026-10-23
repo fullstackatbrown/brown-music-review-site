@@ -11,6 +11,10 @@ import type {
 // Keep env-configurable to avoid casing/slug mismatch.
 const ALBUM_RATE_TYPE = process.env.COSMIC_TYPE_ALBUM_RATE ?? "albumrates"
 const ALBUM_REVIEW_TYPE = process.env.COSMIC_TYPE_ALBUM_REVIEW ?? "albumreview"
+const DEEP_DIVE_TYPE = process.env.COSMIC_TYPE_DEEP_DIVE ?? "deepdives"
+const HOT_TOPIC_TYPE = process.env.COSMIC_TYPE_HOT_TOPIC ?? "hottopics"
+const NARRATIVE_TYPE = process.env.COSMIC_TYPE_NARRATIVE ?? "narratives"
+const OPINION_TYPE = process.env.COSMIC_TYPE_OPINION ?? "opinions"
 
 // The type field on Cosmic objects can vary (e.g. "albumrate", "albumrates",
 // "article" for rates; "albumreview", "albumreviews" for reviews) due to
@@ -18,6 +22,10 @@ const ALBUM_REVIEW_TYPE = process.env.COSMIC_TYPE_ALBUM_REVIEW ?? "albumreview"
 // regardless of the exact value.
 const ALBUM_RATE_TYPES = new Set(["albumrate", "albumrates", "article"])
 const ALBUM_REVIEW_TYPES = new Set(["albumreview", "albumreviews"])
+const DEEP_DIVE_TYPES = new Set(["deepdive", "deepdives"])
+const HOT_TOPIC_TYPES = new Set(["hottopic", "hottopics"])
+const NARRATIVE_TYPES = new Set(["narrative", "narratives"])
+const OPINION_TYPES = new Set(["opinion", "opinions"])
 
 // Shared cache tag for every Cosmic read. A single revalidateTag(COSMIC_TAG)
 // call (from the /api/revalidate webhook) invalidates all Cosmic-backed data
@@ -130,6 +138,22 @@ export function isAlbumReview(article: CosmicArticle): article is AlbumReview {
   return ALBUM_REVIEW_TYPES.has(article.type)
 }
 
+export function isDeepDive(article: CosmicArticle): boolean {
+  return DEEP_DIVE_TYPES.has(article.type)
+}
+
+export function isHotTopic(article: CosmicArticle): boolean {
+  return HOT_TOPIC_TYPES.has(article.type)
+}
+
+export function isNarrative(article: CosmicArticle): boolean {
+  return NARRATIVE_TYPES.has(article.type)
+}
+
+export function isOpinion(article: CosmicArticle): boolean {
+  return OPINION_TYPES.has(article.type)
+}
+
 function getArticleMetadata(article: CosmicArticle): ArticleMetadata {
   return (article.metadata ?? {}) as ArticleMetadata
 }
@@ -194,7 +218,7 @@ async function findArticleBySlug(slug: string): Promise<CosmicArticle | null> {
       return null
     }
 
-    if (!isAlbumRate(article) && !isAlbumReview(article)) {
+    if (!isAlbumRate(article) && !isAlbumReview(article) && !isDeepDive(article) && !isHotTopic(article) && !isNarrative(article) && !isOpinion(article)) {
       return null
     }
 
@@ -246,6 +270,22 @@ export function getArticleTypeLabel(article: CosmicArticle): string {
 
   if (isAlbumReview(article)) {
     return "Album Review"
+  }
+
+  if (isDeepDive(article)) {
+    return "Deep Dive"
+  }
+
+  if (isHotTopic(article)) {
+    return "Hot Topic"
+  }
+
+  if (isNarrative(article)) {
+    return "Narrative"
+  }
+
+  if (isOpinion(article)) {
+    return "Opinion"
   }
 
   return "Article"
@@ -337,7 +377,17 @@ function getArticleSummary(article: CosmicArticle): string {
     return ""
   }
 
-  return toPreviewText(body).slice(0, 220)
+  const preview = toPreviewText(body)
+  if (preview.length <= 220) {
+    return preview
+  }
+
+  // Back up to the last space so the preview ends on a whole word. A single
+  // word longer than the limit has no space to back up to, so cut it as-is.
+  const cut = preview.slice(0, 221)
+  const lastSpace = cut.lastIndexOf(" ")
+  const trimmed = lastSpace > 0 ? cut.slice(0, lastSpace) : cut.slice(0, 220)
+  return `${trimmed.replace(/[\s.,;:!?—–-]+$/, "")}…`
 }
 
 function getArticlePublishedYear(article: CosmicArticle): string {
@@ -461,12 +511,16 @@ function hasBodyContent(article: CosmicArticle): boolean {
 }
 
 async function loadAllCosmicArticles(limit: number): Promise<CosmicArticle[]> {
-  const [albumRates, albumReviews] = await Promise.all([
+  const [albumRates, albumReviews, deepDives, hotTopics, narratives, opinions] = await Promise.all([
     getArticlesByType<AlbumRate>(ALBUM_RATE_TYPE, limit),
     getArticlesByType<AlbumReview>(ALBUM_REVIEW_TYPE, limit),
+    getArticlesByType<AlbumReview>(DEEP_DIVE_TYPE, limit),
+    getArticlesByType<AlbumReview>(HOT_TOPIC_TYPE, limit),
+    getArticlesByType<AlbumReview>(NARRATIVE_TYPE, limit),
+    getArticlesByType<AlbumReview>(OPINION_TYPE, limit),
   ])
 
-  return [...albumRates, ...albumReviews]
+  return [...albumRates, ...albumReviews, ...deepDives, ...hotTopics, ...narratives, ...opinions]
     .filter(hasBodyContent)
     .sort((left, right) => getArticlePublishedSortValue(right) - getArticlePublishedSortValue(left))
 }
@@ -498,7 +552,14 @@ async function loadArticlesByCategory(
   limit: number,
 ): Promise<HomepageArticle[]> {
   const articles = await loadAllCosmicArticles(limit)
-  const filtered = articles.filter((a) => ARTICLE_CATEGORIES[a.slug] === category)
+  const filtered = articles.filter((a) => {
+    const cat = isDeepDive(a) ? "deepdive"
+      : isHotTopic(a) ? "hottopics"
+      : isNarrative(a) ? "narratives"
+      : isOpinion(a) ? "opinions"
+      : ARTICLE_CATEGORIES[a.slug]
+    return cat === category
+  })
   return filtered.slice(0, limit).map(normalizeHomepageArticle)
 }
 
