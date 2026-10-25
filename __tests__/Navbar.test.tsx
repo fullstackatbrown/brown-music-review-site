@@ -8,12 +8,6 @@ describe("Navbar", () => {
     expect(screen.getByText("BROWN MUSIC REVIEW")).toBeInTheDocument()
   })
 
-  it("renders a Subscribe button", () => {
-    render(<Navbar />)
-    const btn = screen.getByRole("link", { name: /subscribe/i })
-    expect(btn).toBeInTheDocument()
-  })
-
   it("renders correct navigation links", () => {
     render(<Navbar />)
     const expectedLinks = [

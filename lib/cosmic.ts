@@ -106,7 +106,6 @@ const ARTICLE_CATEGORIES: Record<string, ArticleCategory> = {
   "what-was-that": "narratives",
   "bmrs-music-of-2025": "hottopics",
   "spring-weekend-listicle": "hottopics",
-  "for-melancholy-brunettes-and-sad-women-japanese-breakfast": "opinions",
   "through-the-wall": "opinions",
 }
 
