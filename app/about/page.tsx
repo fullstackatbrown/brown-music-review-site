@@ -2,13 +2,13 @@ import Image from "next/image";
 
 // TODO: fill in full names and roles
 const staff = [
-  { name: "Eliot", role: "Managing Editor", photo: "/Eliot.jpeg" },
-    { name: "Joanna", role: "Managing Editor", photo: "/Joanna.jpeg" },
-  { name: "Amelia", role: "Marketing Lead", photo: "/Amelia.jpeg" },
-  { name: "Andrew", role: "Outreach Coordinator", photo: "/Andrew.jpeg" },
-  { name: "Arian", role: "Editing Lead", photo: "/Arian.jpeg" },
-  { name: "Grace", role: "Finance and Events Lead", photo: "/Grace.jpeg" },
-  { name: "Justin", role: "Design Lead", photo: "/Justin.jpeg" },
+  { name: "Eliot Geer", role: "Managing Editor", photo: "/Eliot.jpeg" },
+    { name: "Joanna Beltre", role: "Managing Editor", photo: "/Joanna.jpeg" },
+  { name: "Amelia Allen", role: "Marketing Lead", photo: "/Amelia.jpeg" },
+  { name: "Andrew Fuente", role: "Outreach Coordinator", photo: "/Andrew.jpeg" },
+  { name: "Arian Lagarija", role: "Editing Lead", photo: "/Arian.jpeg" },
+  { name: "Grace Gongoleski", role: "Finance and Events Lead", photo: "/Grace.jpeg" },
+  { name: "Justin Kuo", role: "Design Lead", photo: "/Justin.jpeg" },
 ];
 
 export default function About() {
