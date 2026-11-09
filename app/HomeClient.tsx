@@ -419,7 +419,7 @@ export default function HomeClient({ articles }: { articles: HomepageArticle[] }
         <div className="flex-1 flex flex-col pr-0 overflow-hidden">
           {/* Latest From heading */}
           <div className="pr-8 mb-6">
-            <h2 className="font-serif text-[clamp(24px,2.8vw,42px)] font-medium italic text-[#D20000] leading-none mb-2 text-left">
+            <h2 className="font-serif text-[clamp(18px,2.1vw,31.5px)] font-bold text-[#D20000] leading-none mb-2 text-left">
               Latest
             </h2>
             <div className="border-t-[3px] border-black w-full" />

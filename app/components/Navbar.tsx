@@ -177,16 +177,8 @@ export default function Navbar() {
 
           {/* Logo */}
           <div className="flex items-center justify-center mb-[1.3rem]">
-            {/* Helvetica Neue ships no face above Bold, so font-weight alone
-                tops out at 700 and `font-extrabold` would render identically.
-                The text stroke thickens the glyph outlines themselves, which
-                is what actually reads as heavier — on Windows/Linux too, where
-                this falls back to Arial and hits the same 700 ceiling. */}
-            <div
-              className="text-white text-[1.95rem] leading-[2.6rem] font-extrabold tracking-[0.18em] uppercase"
-              style={{ WebkitTextStroke: "0.6px currentColor" }}
-            >
-              BROWN MUSIC REVIEW
+            <div className="font-serif text-white text-[2.7421875rem] leading-[3.65625rem] font-bold">
+              Brown Music Review
             </div>
           </div>
 

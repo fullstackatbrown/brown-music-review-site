@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react"
 import Navbar from "@/app/components/Navbar"
 
 describe("Navbar", () => {
-  it("renders the BROWN MUSIC REVIEW title text", () => {
+  it("renders the Brown Music Review title text", () => {
     render(<Navbar />)
-    expect(screen.getByText("BROWN MUSIC REVIEW")).toBeInTheDocument()
+    expect(screen.getByText("Brown Music Review")).toBeInTheDocument()
   })
 
   it("renders correct navigation links", () => {
