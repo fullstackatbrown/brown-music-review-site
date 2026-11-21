@@ -16,6 +16,17 @@ type ArticleBodyProps = {
   article: CosmicArticle
 }
 
+// Some CMS markdown closes italics with a space inside the asterisk
+// ("*The Bends *apart"), which markdown doesn't treat as emphasis. Move the
+// space outside ("*The Bends* apart") so it renders as intended. Bold ("**")
+// and list bullets ("* item") are left alone.
+export function fixSpaceBeforeClosingAsterisk(markdown: string): string {
+  return markdown.replace(
+    /(^|[\s(“"‘'])\*(?![\s*])([^*\n]*?[^\s*])\s+\*(?=[\p{L}\p{N}])/gmu,
+    "$1*$2* ",
+  )
+}
+
 export default function ArticleBody({ article }: ArticleBodyProps) {
   const body = getArticleBodyContent(article)
 
@@ -78,7 +89,7 @@ export default function ArticleBody({ article }: ArticleBodyProps) {
           ),
         }}
       >
-        {decodedBody}
+        {fixSpaceBeforeClosingAsterisk(decodedBody)}
       </ReactMarkdown>
     </div>
   )

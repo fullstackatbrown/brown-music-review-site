@@ -233,12 +233,12 @@ export const getArticleBySlug = unstable_cache(
   { revalidate: COSMIC_REVALIDATE_SECONDS, tags: [COSMIC_TAG] },
 )
 
-export function getArticleBodyFormat<T extends CosmicArticle>(
-  article: T,
-): T extends AlbumRate ? "markdown" : "html" {
-  return (isAlbumRate(article) ? "markdown" : "html") as T extends AlbumRate
-    ? "markdown"
-    : "html"
+// Album reviews are stored as HTML, but deep dives, narratives, opinions and
+// hot topics are stored as Markdown, so anything that isn't an album rate is
+// sniffed rather than assumed to be HTML.
+export function getArticleBodyFormat(article: CosmicArticle): "markdown" | "html" {
+  if (isAlbumRate(article)) return "markdown"
+  return looksLikeHtml(getArticleBodyContent(article)) ? "html" : "markdown"
 }
 
 export function getArticleBodyContent(article: CosmicArticle): string {
